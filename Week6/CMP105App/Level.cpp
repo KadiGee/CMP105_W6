@@ -1,5 +1,4 @@
 #include "Level.h"
-
 Level::Level(sf::RenderWindow* hwnd, Input* in)
 {
 	window = hwnd;
@@ -7,6 +6,13 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 
 	// initialise game objects
 
+	texture.loadFromFile("gfx/Beach_Ball.png");
+
+	ball.setTexture(&texture);
+	ball.setSize(sf::Vector2f(100, 100));
+	ball.setPosition(800, 0);
+	ball.setInput(input);
+	
 }
 
 Level::~Level()
@@ -18,19 +24,21 @@ Level::~Level()
 void Level::handleInput(float dt)
 {
 
+	ball.handleInput(dt);
 }
 
 // Update game objects
 void Level::update(float dt)
 {
-
+	sf::Vector2u winsize = window->getSize();
+	ball.update(dt, winsize);
 }
 
 // Render level
 void Level::render()
 {
 	beginDraw();
-
+	window->draw(ball);
 	endDraw();
 }
 
